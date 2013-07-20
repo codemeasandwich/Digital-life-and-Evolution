@@ -5,6 +5,8 @@ class Mouse
   int mouse_fill_high;
   boolean mouse_fill_up;
   float rond;
+  float moveSize;
+  float tempMoveSize;
 
   Mouse()
   {
@@ -13,6 +15,7 @@ class Mouse
       mouse_fill_high = 255;
       mouse_fill_up = true;
       rond = 0;
+      moveSize = 1.0f;
   }
 
   void dispaly()
@@ -40,8 +43,35 @@ else
 stroke(0,0);
 fill(mouse_fill);
 
+if((pmouseX - mouseX)<0)
+{  tempMoveSize = -(pmouseX - mouseX); }
+else
+{  tempMoveSize = pmouseX - mouseX;    }
+
+tempMoveSize = tempMoveSize/25;
+
+if(tempMoveSize>moveSize)
+{
+   if(tempMoveSize>1)
+  {
+    moveSize += 0.075;
+  }
+}
+else
+{
+  if(moveSize>1)
+  {
+    moveSize -= 0.05;
+  }
+  else
+  {
+    moveSize = 1;
+  }
+}
+
 pushMatrix();
   translate(mouseX, mouseY);
+  scale(moveSize);
   rotate(rond);
   rect(-7, -7, 15, 15);
   rond-=0.03;

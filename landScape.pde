@@ -8,6 +8,7 @@ class landScape
   landScape()
   {
       hill_gray = color(40);
+      //println(hill_gray.);
       hills_point_of_last_hill = 0;
       hill_min_hight = 10;
       hill_max_hight = height/7;//NOTE the min will be added to this val

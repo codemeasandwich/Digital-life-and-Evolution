@@ -18,7 +18,6 @@ class twilight
       tempSky_points = (sky_points)Array_stars.get(i);
       tempSky_points.dispaly();
     }
-  
   }
   void addOpen()
   {

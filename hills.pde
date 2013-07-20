@@ -1,6 +1,6 @@
 class hills
 {
-  color hill_gray_iner;// = hill_gray;
+  color hill_gray_iner;
   int x1, y1, x2, y2, x3, y3;
   
   hills(int x1_input,int y1_input,int x2_input,int y2_input,int x3_input,int y3_input)
