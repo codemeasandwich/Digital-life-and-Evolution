@@ -33,7 +33,7 @@ void setup()
   noCursor();
   print(".");
   //============================================================= objects Start
-  Array_size = 151;
+  //Array_size = 151;
   background_colour = 20;
   frameDrawen = 0;
   

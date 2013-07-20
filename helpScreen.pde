@@ -16,14 +16,15 @@ class helpScreen
   void display(float inputScale)
   {
     fill(200,0,0,225);
-    
+    if(0 != inputScale)
+    {
      if(ceanter)
     {
       
       pushMatrix();
         translate(width/2, height/2);
         scale(inputScale);//,inputScale);
-
+        stroke(255);
         rect(-width/2+helpBorder,-height/2+helpBorder,width-helpBorder*2,height-helpBorder*2);
       
       /*
@@ -88,6 +89,7 @@ popMatrix();
     {
       scale(inputScale);
       rect(helpBorder, helpBorder, width - helpBorder*2, height - helpBorder*2);// - 2 because TOP & BOTTEM
+    }
     }
   }
 }

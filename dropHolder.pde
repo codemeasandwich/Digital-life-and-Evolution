@@ -12,7 +12,7 @@ class dropHolder
   dropHolder()
   {
     Array_drops = new ArrayList();
-   // Array_drops_counter = -1;
+   // Array_drops_counter = 0;//-1;
    tempDrops = null;
   }
   void dispaly()
@@ -21,6 +21,7 @@ class dropHolder
         {
            // Array_drops[i].dispaly();
           tempDrops_Dispaly = (drop)Array_drops.get(i);
+          tempDrops_Dispaly.dispaly();
           
           if(null != tempDrops)
           {
@@ -34,15 +35,23 @@ class dropHolder
     
     //Array_drops[Array_drops_counter] = new drop(Array_drops_counter);
    // clicked = true;
-    tempDrops = new drop();//(Array_drops_counter);
-    //Array_drops.add();
+    
+    
+    //tempDrops = new drop();//(Array_drops_counter);
+    
+    
+    Array_drops.add(new drop());
     //Array_drops_counter++;
   }
   void addClose()
   {
-    tempDrops.end();
+    //tempDrops.end();
     //Array_drops[Array_drops_counter].end();
-    Array_drops.add(tempDrops);
-    tempDrops = null;
+    //Array_drops.add(tempDrops);
+    //tempDrops = null;
+    
+   tempDrops = (drop)Array_drops.get(Array_drops.size()-1);
+    tempDrops.end();
+    
   }
 }
