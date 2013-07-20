@@ -47,6 +47,12 @@ class tree_pice
         strokeWeight(1);
         stroke(255);
         fill(0,stroke_colour,0);
+    
+            for(int i = 0; i<hops_count;i++)
+        {
+           past_vertex_array[i].dispaly();
+        }
+
         
         beginShape(TRIANGLE_STRIP);
           vertex(base1_x,base1_y);
@@ -54,10 +60,6 @@ class tree_pice
           vertex(offset_x, offset_y);
         endShape();
 
-        for(int i = 0; i<hops_count;i++)
-        {
-           past_vertex_array[i].dispaly();
-        }
 
         if(offset_x<end_point_x)
         {
