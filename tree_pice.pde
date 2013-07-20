@@ -4,14 +4,12 @@ class tree_pice
     int base2_x, base2_y;
     int end_point_x, end_point_y;
     int offset_x, offset_y;
-    int hops;
-    int hops_count;
+    int hops, hops_count;
     int[] past_hops;
     past_vertex[] past_vertex_array;
     int stroke_colour;
     int tree_size;
     int lORr;
-    //int TTL
     
   tree_pice(
     int base1_x_input,int base1_y_input, 
@@ -33,13 +31,14 @@ class tree_pice
     past_vertex_array = new past_vertex[hops];
     past_hops = new int [hops*6];// 6 points
     stroke_colour = (int)random(100)+100;
-    if(tree_size_input<50)
+    
+    if(tree_size_input<50)//(height*0.8))
     {
       tree_size = tree_size_input;
     }
     else
     {
-      tree_size = 50;
+      tree_size = 50;//height/11;
     }
   }
  

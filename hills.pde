@@ -28,12 +28,10 @@ class hills
         strokeWeight(0);
         if(hill_gray != hill_gray_iner)
         {
-          //stroke(hill_gray_iner);
           fill(hill_gray_iner);
         }
         else
         {
-          //stroke(hill_gray);
           fill(hill_gray);
         }
         beginShape(TRIANGLE_STRIP);

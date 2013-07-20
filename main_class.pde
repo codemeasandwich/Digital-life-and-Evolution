@@ -10,7 +10,6 @@
  int Array_drops_counter, Array_stars_counter, Array_size;
  boolean show_xy;
  boolean clicked, clicked_stars;
- //boolean kill_Tree;
  drop[] Array_drops;
  sky_points[] Array_stars;
  int nums_of_hill_lares;
@@ -40,10 +39,9 @@ void setup()
   couser = new Mouse();
   clicked = false;
   clicked_stars = false;
-  //kill_Tree = false;
   show_xy = true;
   Array_drops_counter = 0;
-  Array_size = 99;
+  Array_size = 151;
   Array_drops = new drop[Array_size];
   Array_drops_counter = -1;
   
@@ -53,22 +51,20 @@ void setup()
   hill_gray = color(40);
   hills_point_of_last_hill = 0;
   hill_min_hight = 10;
-  hill_max_hight = height/7;//30;//NOTE the min will be added to this val
+  hill_max_hight = height/7;//NOTE the min will be added to this val
   hills_overlap = 23;
   hills_points = 10;
   nums_of_hill_lares = 3;
   print(".");
-    //  fill(255);
-    //  text("LOADING...", width/2, height/2); //my number
+
   bg_hills = new hills[nums_of_hill_lares][hills_points];
   int colour = 0;
   hills_point_of_last_hill = -10;
   for(int h = 0; h<nums_of_hill_lares; h++)
   {
-    colour += 255/4;//nums_of_hill_lares;
+    colour += 255/4;
         for(int i = 0; i<hills_points; i++)
-        {
-          //                       [                 x1                   ][   y1   ][                 x2                    ][                             y2                 ][             x3              ][   y3  ][         colour         ]
+        {//                       [                 x1                   ][   y1   ][                 x2                    ][                             y2                 ][             x3              ][   y3  ][         colour         ]
             bg_hills[h][i] = new hills(hills_point_of_last_hill - hills_overlap, height, hills_point_of_last_hill+(int)random(30),height-(int)random(hill_max_hight)-hill_min_hight, width/hills_points + hills_point_of_last_hill, height,colour/*,hills_point_of_last_hill/3*/);
             hills_point_of_last_hill += width/hills_points;//bg_hills[i] = new hills( _ , height , _ , _ , _ ,height ) // this keeps the base at the bottem of the screen
         }
@@ -78,6 +74,8 @@ void setup()
         println("All done.");
         println("");
         println("press TAB to hide and show the X Y");
+        println("press Right mouse button to add a star");
+        println("press Left mouse button to start droping a seed");
 }
 
 //==============================================================================void setup - End
@@ -86,17 +84,16 @@ void draw()
 {
   frameDrawen++;
   background(background_colour);
+  
 //==============================================================================Stars - Start
   if(true == clicked_stars)
   {
     for(int i = 0; i<=Array_stars_counter; i++)
     {
       Array_stars[i].dispaly();
-      //Array_stars[Array_stars_counter]
     }
   }
 //==============================================================================Stars - End
-
 //==============================================================================Hills - Start
     for(int h = 0; h<nums_of_hill_lares; h++)
     {
@@ -106,7 +103,6 @@ void draw()
         }
     }
 //==============================================================================Hills - End
-
 //==============================================================================Draw Drop Line - Start
 
   if(true == clicked)
@@ -119,9 +115,6 @@ void draw()
 
     if(keyPressed)
     {
-      //if (key == 'b' || key == 'B') {
-      //fill(0);
-      //print(key);
       if (key == TAB)
       {
         if(true == show_xy)
@@ -132,7 +125,6 @@ void draw()
         {
           show_xy = true;
         }
-        
         key = '?';
       }
     }
@@ -142,25 +134,18 @@ void draw()
   
   //to be draw last so it sittes on top
   couser.dispaly();
-  //translate(mouseX*-1,mouseY*-1);
   
   pushMatrix();
-  translate(10,height/2);
-  //rect(0,0,10,10);
- // println(round_temp);
-    //rotate(round_temp);//width, height
-    //round_temp +=0.01f;
+    translate(10,height/2);
     rotate(4.710);
     fill(23,54,203);
-    text(/*"fps:"+fps+*/"X00022027", 0, 10); //my number
-    
+    text("X00022027", 0, 10); //my number
   popMatrix();
   
   if(true == show_xy)
   {
     ShowMouse_xy();
   }
-                                    //Mouse Stuff
 //==============================================================================Dispaly ID - End
 }
 
@@ -173,7 +158,6 @@ void ShowMouse_xy()// mouse info
   int val = 0;
   String xy = "";
   fill(155);
-  
   
   for(int counter = 0; counter<2; counter++)
   {
@@ -218,7 +202,6 @@ void mousePressed()
   }
   else if (mouseButton == RIGHT)
   {
-    //kill_Tree = true;
     Array_stars_counter++;
     Array_stars[Array_stars_counter] = new sky_points(mouseX, mouseY);
     clicked_stars = true;
@@ -232,7 +215,5 @@ void mouseReleased()
     Array_drops[Array_drops_counter].end();
   }
   else if (mouseButton == RIGHT)
-  {
-    //kill_Tree = false;
-  }
+  {  }
 }

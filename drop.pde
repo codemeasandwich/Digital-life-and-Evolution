@@ -9,7 +9,6 @@ class drop
   boolean Mouse_clicked;
   tree_pice tree;
 //==============================================================================1st step - end
-
 //==============================================================================Contructor - Start
   
   drop(int num)
@@ -39,7 +38,6 @@ class drop
         if(base_x-mouseX>Mouse_line)
         {
            base_x = mouseX+Mouse_line;
-           //Mouse_line -= 2;
         }
         
       }
@@ -49,8 +47,7 @@ class drop
 
         if(mouseX-base_x>Mouse_line)
         {
-          base_x = mouseX-Mouse_line;  
-          //Mouse_line -= 2;
+          base_x = mouseX-Mouse_line;
         }
         
       }
@@ -117,7 +114,6 @@ class drop
 
   void end()
   {
-    //keep leant
     head_y = mouseY;
     head_x = mouseX;
     base_y = mouseY+Mouse_line;
