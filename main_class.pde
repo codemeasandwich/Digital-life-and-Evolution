@@ -25,7 +25,7 @@ void setup()
   
   print("Loading");
   fps = 30;
-  framerate(fps);
+  frameRate(fps);
   noStroke(); 
   smooth();
   size(400, 300);                   //setup window

@@ -43,11 +43,22 @@ else
 
 stroke(mouse_fill);
 fill(mouse_fill);
+pushMatrix();
 translate(mouseX, mouseY);
 rotate(rond);
 rect(-7, -7, 15, 15);
 //rect(mouseX-7, mouseY-7, 15, 15);
 rond-=0.03;
+popMatrix();
+//rotate(rond*-1);
+
+//translate(width - mouseX, height - mouseY);
+//translate((mouseX/2)*-1,mouseY/2*-1);
+//translate(mouseX - width,mouseY - height);
+//translate(mouseX*-1,mouseY*-1);
+//translate(0,0);
+
+//println ((mouseX - width)*-1);
   }
   
 }
