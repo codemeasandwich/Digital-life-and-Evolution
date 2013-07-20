@@ -2,6 +2,7 @@
 /****************************\
 * Brian Shannon       Year 4 *
 * X00022027           CA 1   *
+* -=Living Art - 256 Lines=- *
 \****************************/
 
 int window_h;
@@ -49,7 +50,6 @@ void setup()
 
 void draw()
 {
-//println("x"+mouseX+" y"+mouseY);
   
   frameDrawen++;
   background(0);
@@ -73,7 +73,7 @@ if(true == mouse_fill_up)
 }
 else
 {
-    mouse_fill--;
+  mouse_fill--;
   
   if(mouse_fill<=200)
   {
@@ -89,10 +89,8 @@ rect(mouseX-7, mouseY-7, 15, 15);
 
   if(true == clicked)
   {
-    //print("hellp");
     for(int i = 0; i<=Array_drops_counter; i++)
     {
-      //print("xxx");
       Array_drops[i].dispaly();
     }
   }
@@ -102,7 +100,7 @@ rect(mouseX-7, mouseY-7, 15, 15);
 //==============================================================================Dispaly ID - Start
   //to be draw last so it sittes on top
   fill(23,54,203);
-  text("X00022027 (fps:"+fps+") "/*+frameDrawen*/, /*window_w -*/ 10, window_h - 10); //my number
+  text("X00022027 (fps:"+fps+")", 10, window_h - 10); //my number
   fill(255);
   text("x"+mouseX+" y"+mouseY,window_w-90,20);                                        // mouse info
   
@@ -111,18 +109,13 @@ rect(mouseX-7, mouseY-7, 15, 15);
 
 void mousePressed()
 {
-  //print("1");
   Array_drops_counter++;
   Array_drops[Array_drops_counter] = new drop(Array_drops_counter);
   clicked = true;
- // print("2");
 }
 void mouseReleased()
 {
-  //Mouse_clicked = false;
-  //Mouse_line = 0;
   Array_drops[Array_drops_counter].end();
-  
 }
 
 //==============================================================================Custom Classes - Start
@@ -143,15 +136,13 @@ class drop
   
   drop(int num)
   {
-    
-    //print("dro");
     dropID = num;
     head_y = mouseY;
     head_x = mouseX;
     base_y = mouseY;
     base_x = mouseX;
     
-    ofset_x = 0;//mouseX;
+    ofset_x = 0;
     ofset_y = 0;
     
     Mouse_clicked = true;
@@ -162,35 +153,21 @@ class drop
   void dispaly()
   {
     //draw the line
-    //print("dis");
     
     if (true == Mouse_clicked)
     {
-//==============================================================================find ofset - Start
-/*
-      if(mouseX<base_x || mouseX>base_x)
-      {
-        ofset_x = (mouseX - base_x)/10;
-        //println("||"+ofset_x);
-      }
-      */
-//==============================================================================find ofset - end
       
 //==============================================================================compensate - Start
 
       if(mouseX<base_x)
       {
         base_x--;
-       // Mouse_line += 0.5;
+        //Mouse_line--;
       }
       else if (mouseX>base_x)
       {
         base_x++;
-        // Mouse_line += 0.5;
-      }
-      else
-      {
-        
+        //Mouse_line--;
       }
       
 //==============================================================================compensate - end
@@ -221,59 +198,60 @@ class drop
       if(head_y>window_h)
       {
         println("gro!"+dropID);
+        //Mouse_line - 1/2
+       // head_x
+        stroke(255);
+        fill(233,0,0);
+        beginShape(TRIANGLE_STRIP);
+        //vertex(x,y);
+        
+        vertex(head_x - (Mouse_line/4), window_h);
+        vertex(head_x + (Mouse_line/4), window_h);
+        vertex(head_x, 100);
+        vertex(140, 70);
+        vertex(105, 60);
+        vertex(110, 80);
+
+        endShape();
       }
       else
       {
-        //stroke(255);
-      if(base_x<head_x)
-      {
-        head_x--;
-      }
-      else if (base_x>head_x)
-      {
-        head_x++;
-      }
+          if(base_x<head_x)
+          {
+              head_x--;
+              base_y++;
+          }
+          else if (base_x>head_x)
+          {
+              head_x++;
+              base_y++;
+          }
       
-      stroke(255);
+        stroke(255);
         line(head_x, head_y, base_x, base_y);
         head_y += 1.5;
         base_y += 1.5;
         
         /*
         stroke(255);
-fill(233,0,0);
-beginShape(TRIANGLE_STRIP);
-//vertex(x,y);
-vertex(150, 100);
-vertex(125, 75);
-vertex(100, 100);
-vertex(140, 70);
-vertex(105, 60);
-vertex(110, 80);
+        fill(233,0,0);
+        beginShape(TRIANGLE_STRIP);
+        
+        //vertex(x,y);
+        
+        vertex(150, 100);
+        vertex(125, 75);
+        vertex(100, 100);
+        vertex(140, 70);
+        vertex(105, 60);
+        vertex(110, 80);
 
-endShape();
+        endShape();
         */
       }
     }
   }
-  /*
-    int compensate(int top,int bottem)
-    {
-       if(top == bottem)
-      {
-        //println("00000000000000.0000000000000000000000");
-      }
-      else if(top<bottem)
-      {
-        bottem -= 1.5;
-      }
-      else if (top>bottem)
-      {
-        bottem += 1.5;
-      }
-      return bottem;
-    }
-    */
+
   void end()
   {
     //keep leant
@@ -285,6 +263,4 @@ endShape();
   }
 }
 
-
 //==============================================================================Custom Classes - End
-
