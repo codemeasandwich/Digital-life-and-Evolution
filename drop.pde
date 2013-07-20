@@ -39,6 +39,7 @@ class drop
         if(base_x-mouseX>Mouse_line)
         {
            base_x = mouseX+Mouse_line;
+           //Mouse_line -= 2;
         }
         
       }
@@ -48,7 +49,8 @@ class drop
 
         if(mouseX-base_x>Mouse_line)
         {
-          base_x = mouseX-Mouse_line;    
+          base_x = mouseX-Mouse_line;  
+          //Mouse_line -= 2;
         }
         
       }
@@ -61,6 +63,7 @@ class drop
        else if(mouseY+Mouse_line >=height)
        {
            Mouse_line = height - mouseY;
+           
        }
        else
        {

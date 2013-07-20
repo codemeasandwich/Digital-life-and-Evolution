@@ -8,11 +8,12 @@ class Mouse
 
   Mouse()
   {
-    rond = 360.0;
+    //rond = 360.0;
       mouse_fill = 200;
       mouse_fill_low = 200;
       mouse_fill_high = 255;
       mouse_fill_up = true;
+      rond = 0;
   }
 
   void dispaly()
@@ -41,15 +42,17 @@ else
   }
 }
 
-stroke(mouse_fill);
+stroke(0,0);
 fill(mouse_fill);
+
 pushMatrix();
-translate(mouseX, mouseY);
-rotate(rond);
-rect(-7, -7, 15, 15);
-//rect(mouseX-7, mouseY-7, 15, 15);
-rond-=0.03;
+  translate(mouseX, mouseY);
+  rotate(rond);
+  rect(-7, -7, 15, 15);
+  //rect(mouseX-7, mouseY-7, 15, 15);
+  rond-=0.03;
 popMatrix();
+
 //rotate(rond*-1);
 
 //translate(width - mouseX, height - mouseY);
