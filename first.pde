@@ -4,7 +4,6 @@
 * -=Digital Life-  ? Lines=- *
 \****************************/
 
- int window_h, window_w;
  int fps;
  int frameDrawen;
  int background_colour;
@@ -24,10 +23,20 @@
 
 void setup()
 {
-  window_w = 400;
-  window_h = 300;
   fps = 30;
-  background_colour = 0;
+  framerate(fps);
+  noStroke(); 
+  smooth();
+  size(400, 300);                   //setup window
+  PFont fontA = loadFont("Asman-18.vlw"); //load font
+ // PFont fontB = loadFont("BlueHighwayCondensed-26.vlw");
+  textFont(fontA, 16);                        //font type and size
+  
+  noCursor();
+  //width = 400;
+  //height = 300;
+  
+  background_colour = 20;
   frameDrawen = 0;
   couser = new Mouse();
   clicked = false;
@@ -37,7 +46,7 @@ void setup()
   Array_drops = new drop[Array_drops_size];
   Array_drops_counter = -1;
   
-  hill_gray = color(43);
+  hill_gray = color(40);
   hills_point_of_last_hill = 0;
   hill_min_hight = 10;
   hill_max_hight = 30;//NOTE the min will be added to this val
@@ -49,21 +58,15 @@ void setup()
         {
           if(0 ==i)
           {
-              bg_hills[i] = new hills(-10, window_h, (int)random(hill_max_hight), window_h-(int)random(hill_max_hight), 50, window_h);
+              bg_hills[i] = new hills(-10, height, (int)random(hill_max_hight), height-(int)random(hill_max_hight), 50, height);
               hills_point_of_last_hill = 50;
           }
           else
-          {//                       [                 x1                   ][   y1   ][                 x2                    ][                             y2                    ][             x3              ][   y3  ]
-            bg_hills[i] = new hills(hills_point_of_last_hill - hills_overlap, window_h, hills_point_of_last_hill+(int)random(30),window_h-(int)random(hill_max_hight)-hill_min_hight, 50 + hills_point_of_last_hill, window_h,hills_point_of_last_hill/3);
-            hills_point_of_last_hill += 50;//bg_hills[i] = new hills( _ , window_h , _ , _ , _ ,window_h ) // this keeps the base at the bottem of the screen
+          {//                       [                 x1                   ][   y1   ][                 x2                    ][                             y2                 ][             x3              ][   y3  ][         colour         ]
+            bg_hills[i] = new hills(hills_point_of_last_hill - hills_overlap, height, hills_point_of_last_hill+(int)random(30),height-(int)random(hill_max_hight)-hill_min_hight, 50 + hills_point_of_last_hill, height/*,hills_point_of_last_hill/3*/);
+            hills_point_of_last_hill += 50;//bg_hills[i] = new hills( _ , height , _ , _ , _ ,height ) // this keeps the base at the bottem of the screen
            }  
         }
-  framerate(fps);
-  noStroke(); 
-  smooth();
-  size(window_w, window_h);                   //setup window
-  PFont fontA = loadFont("CourierNew36.vlw"); //load font
-  textFont(fontA, 16);                        //font type and size
 }
 
 //==============================================================================void setup - End
@@ -71,7 +74,6 @@ void setup()
 void draw()
 {
   frameDrawen++;
-  //background(mouseX);
   background(background_colour);
 
 //==============================================================================Hills - Start
@@ -94,17 +96,67 @@ void draw()
 //==============================================================================Draw Drop Line - End
   
 //==============================================================================Dispaly ID - Start
+  
   //to be draw last so it sittes on top
   fill(23,54,203);
-  text("X00022027 (fps:"+fps+")", 10, window_h - 10); //my number
-  fill(255);
-  text("x"+mouseX+" y"+mouseY,window_w-90,20);        // mouse info
-  
+  text("X00022027 (fps:"+fps+")", 10, height - 10); //my number
+  ShowMouse_xy();
   couser.dispaly();                                  //Mouse Stuff
 //==============================================================================Dispaly ID - End
 }
+void ShowMouse_xy()// mouse info
+{
+  int offset_x = 90;
+  int offset_y = 50;
+  int offset = 0;
+  int val = 0;
+  String xy = "";
+  fill(155);
+  
+  for(int counter = 0; counter<2; counter++)
+  {
+    if (1 == counter)
+    {
+      offset = offset_x;
+      xy = "x";
+      val = mouseX;
+    }
+    else
+    {
+      offset = offset_y;
+      xy = "y";
+      val = mouseY;
+    }
+      if(0 <= val && 10>val)
+      {
+         text(xy+"00"+val,width-offset,20);
+      }
+      else if(9 < val && 100>val)
+      {
+          text(xy+"0"+val,width-offset,20);
+      }
+      else
+      {
+          text(xy+val,width-offset,20);
+      }
+  }
+}
 void mousePressed()
 {
+  /*
+    if (mouseButton == LEFT)
+    {
+      
+    } 
+    else if (mouseButton == RIGHT)
+    {
+       
+    }
+    else //(mouseButton == MIDDEL)
+    {
+        
+    }
+  */
   Array_drops_counter++;
   Array_drops[Array_drops_counter] = new drop(Array_drops_counter);
   clicked = true;
@@ -168,18 +220,19 @@ int grow_Val;
 //==============================================================================compensate - end
       
 //==============================================================================Draw line - start
+       strokeWeight(Mouse_line/50);
        stroke(255);
        line(mouseX, mouseY, base_x, mouseY+Mouse_line);
 //==============================================================================Draw line - end
    
 //==============================================================================coleashion with bottem of screen - start
-       if(mouseY>window_h)
+       if(mouseY>height)
        {
           Mouse_line = 0;
        }
-       else if(mouseY+Mouse_line >=window_h)
+       else if(mouseY+Mouse_line >=height)
        {
-           Mouse_line = window_h - mouseY;
+           Mouse_line = height - mouseY;
        }
        else
        {
@@ -189,23 +242,24 @@ int grow_Val;
     }
     else
     {
-      if(head_y>window_h)
+      if(head_y>height)
       {
         if (Mouse_line/6>grow_Val)
         {
           grow_Val++;
         }
-
+        strokeWeight(3);
         stroke(255);
         fill(0);
         beginShape(TRIANGLE_STRIP);
-          vertex(head_x - (Mouse_line/4), window_h);
-          vertex(head_x + (Mouse_line/4), window_h);
-          vertex(head_x, window_h - grow_Val);
+          vertex(head_x - (Mouse_line/4), height+5);
+          vertex(head_x + (Mouse_line/4), height+5);
+          vertex(head_x, height - grow_Val);
         endShape();
       }
       else
       {
+        
           if(base_x<head_x)
           {
               head_x--;
@@ -218,6 +272,7 @@ int grow_Val;
               base_y++;
               Mouse_line++;
           }
+        strokeWeight(Mouse_line/50);
         stroke(255);
         line(head_x, head_y, base_x, base_y);
         head_y += 1.5;
@@ -287,6 +342,7 @@ rotate(rond);
 rect(-7, -7, 15, 15);
 //rect(mouseX-7, mouseY-7, 15, 15);
 rond-=0.03;
+
   }
   
 }
@@ -294,7 +350,7 @@ rond-=0.03;
 //==============================================================================
 class hills
 {
-  color hill_gray_iner;
+  color hill_gray_iner = hill_gray;
   int x1, y1, x2, y2, x3, y3;
   
   hills(int x1_input,int y1_input,int x2_input,int y2_input,int x3_input,int y3_input)
@@ -319,6 +375,7 @@ class hills
   void dispaly()
   {
         stroke(hill_gray);
+        strokeWeight(0);
         if(hill_gray != hill_gray_iner)
         {
           fill(hill_gray_iner);
