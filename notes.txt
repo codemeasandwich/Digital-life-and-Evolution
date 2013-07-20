@@ -1,0 +1,10 @@
+  translate(200,200);
+  beginShape(POLYGON);
+    vertex(-50, -50);
+    vertex(-35, -15);
+    vertex(30, -15);
+    vertex(50, -50);
+    vertex(50, 50);
+    vertex(-50, 50);
+    vertex(-50, -50);
+  endShape(); 
