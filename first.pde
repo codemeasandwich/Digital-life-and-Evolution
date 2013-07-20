@@ -17,6 +17,8 @@ boolean mouse_fill_up;
 boolean clicked;
 drop[] Array_drops;
 
+//==============================================================================void setup - Start
+
 void setup()
 {
   window_w = 400;
@@ -43,15 +45,17 @@ void setup()
   textFont(fontA, 16);                        //font type and size
 }
 
+//==============================================================================void setup - End
+
 void draw()
 {
-  //println("x"+mouseX+" y"+mouseY);
+//println("x"+mouseX+" y"+mouseY);
   
   frameDrawen++;
   background(0);
 //translate(window_w/2, window_h/2);
 
-//==================================================Mouse Stuff - Start
+//==============================================================================Mouse Stuff - Start
 //hidemouse ???
 
 //rectMode(CENTER);
@@ -79,9 +83,9 @@ else
 fill(mouse_fill);
 rect(mouseX-7, mouseY-7, 15, 15);
  
-//==================================================Mouse Stuff - End
+//==============================================================================Mouse Stuff - End
 
-//==================================================Draw Drop Line - Start
+//==============================================================================Draw Drop Line - Start
 
   if(true == clicked)
   {
@@ -93,15 +97,16 @@ rect(mouseX-7, mouseY-7, 15, 15);
     }
   }
 
-
-  //==================================================Draw Drop Line - End
+//==============================================================================Draw Drop Line - End
   
-  //==================================================Dispaly ID - Start
+//==============================================================================Dispaly ID - Start
   //to be draw last so it sittes on top
   fill(23,54,203);
   text("X00022027 (fps:"+fps+") "/*+frameDrawen*/, /*window_w -*/ 10, window_h - 10); //my number
+  fill(255);
+  text("x"+mouseX+" y"+mouseY,window_w-90,20);                                        // mouse info
   
-  //==================================================Dispaly ID - End
+//==============================================================================Dispaly ID - End
 }
 
 void mousePressed()
@@ -120,7 +125,7 @@ void mouseReleased()
   
 }
 
-//==================================================Custom Classes - Start
+//==============================================================================Custom Classes - Start
 
 class drop
 {
@@ -128,21 +133,31 @@ class drop
   int head_y;
   int head_x;
   int base_y;
-  //int base_x;
+  int base_x;
+  int ofset_x;
+  int ofset_y;
   int Mouse_line;//line_size
   boolean Mouse_clicked;
   
-  drop(int num)// Contructor
+//==============================================================================Contructor - Start
+  
+  drop(int num)
   {
+    
     //print("dro");
     dropID = num;
-    head_y = 0;
-    head_x = 0;
-    base_y = 0;
-   // base_x = 0;
+    head_y = mouseY;
+    head_x = mouseX;
+    base_y = mouseY;
+    base_x = mouseX;
+    
+    ofset_x = 0;//mouseX;
+    ofset_y = 0;
+    
     Mouse_clicked = true;
     Mouse_line = 0;
   }
+//==============================================================================Contructor - End
 
   void dispaly()
   {
@@ -151,9 +166,42 @@ class drop
     
     if (true == Mouse_clicked)
     {
+//==============================================================================find ofset - Start
+/*
+      if(mouseX<base_x || mouseX>base_x)
+      {
+        ofset_x = (mouseX - base_x)/10;
+        //println("||"+ofset_x);
+      }
+      */
+//==============================================================================find ofset - end
+      
+//==============================================================================compensate - Start
+
+      if(mouseX<base_x)
+      {
+        base_x--;
+       // Mouse_line += 0.5;
+      }
+      else if (mouseX>base_x)
+      {
+        base_x++;
+        // Mouse_line += 0.5;
+      }
+      else
+      {
+        
+      }
+      
+//==============================================================================compensate - end
+      
+//==============================================================================Draw line - start
+     // println(ofset_x);
        stroke(255);
-       line(mouseX, mouseY, mouseX, mouseY+Mouse_line);
+       line(mouseX, mouseY, /*compensate(mouseX,base_x)*/base_x, mouseY+Mouse_line);
+//==============================================================================Draw line - end
    
+//==============================================================================coleashion with bottem of screen - start
        if(mouseY>window_h)
        {
           Mouse_line = 0;
@@ -164,8 +212,9 @@ class drop
        }
        else
        {
-           Mouse_line++;
+           Mouse_line ++;
        }
+//==============================================================================coleashion with bottem of screen - end
     }
     else
     {
@@ -175,8 +224,18 @@ class drop
       }
       else
       {
-        stroke(255);
-        line(head_x, head_y, head_x, base_y);
+        //stroke(255);
+      if(base_x<head_x)
+      {
+        head_x--;
+      }
+      else if (base_x>head_x)
+      {
+        head_x++;
+      }
+      
+      stroke(255);
+        line(head_x, head_y, base_x, base_y);
         head_y += 1.5;
         base_y += 1.5;
         
@@ -197,18 +256,35 @@ endShape();
       }
     }
   }
-
+  /*
+    int compensate(int top,int bottem)
+    {
+       if(top == bottem)
+      {
+        //println("00000000000000.0000000000000000000000");
+      }
+      else if(top<bottem)
+      {
+        bottem -= 1.5;
+      }
+      else if (top>bottem)
+      {
+        bottem += 1.5;
+      }
+      return bottem;
+    }
+    */
   void end()
   {
     //keep leant
     head_y = mouseY;
     head_x = mouseX;
     base_y = mouseY+Mouse_line;
-    //base_x = mouseX;
+   // base_x = mouseX;
     Mouse_clicked = false;
   }
 }
 
 
-//==================================================Custom Classes - End
+//==============================================================================Custom Classes - End
 
