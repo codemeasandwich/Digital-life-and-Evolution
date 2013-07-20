@@ -1,15 +1,35 @@
+/****************************\
+* Brian Shannon       Year 4 *
+* X00022027           CA 1   *
+\****************************/
+
 
 //random(0.05, 0.8);
 
 int window_h;
 int window_w;
+int fps;
+int frameDrawen;
 
-drops[] drops_of_mouse;//line(0, y, width, y);
+int Mouse_line;
+
+boolean Mouse_clicked;
+
+int mouse_fill;
+boolean mouse_fill_up;
 
 void setup()
 {
+  
   window_w = 400;
   window_h = 300;
+  fps = 30;
+  frameDrawen = 0;
+  mouse_fill = 200;
+  mouse_fill_up = true;
+  Mouse_clicked = false;
+  Mouse_line = 0;
+  framerate(fps);
   
   noStroke(); 
   smooth();
@@ -22,31 +42,110 @@ void setup()
 
 void draw()
 {
-  background(120);
+  frameDrawen++;
+  background(0);
+//translate(window_w/2, window_h/2);
+
+//==================================================Mouse Stuff - Start
+//hidemouse ???
+
+//rectMode(CENTER);
+//rotate(frameDrawen);
+stroke(0);
+
+if(true == mouse_fill_up)
+{
+  mouse_fill++;
   
+  if(mouse_fill>=255)
+  {
+    mouse_fill_up = false;
+  }
+}
+else
+{
+    mouse_fill--;
+  
+  if(mouse_fill<=200)
+  {
+    mouse_fill_up = true;
+  }
+}
+fill(mouse_fill);
+rect(mouseX-7, mouseY-7, 15, 15);
+ 
+//==================================================Mouse Stuff - End
+
+//==================================================Draw Drop Line - Start
+if(true == Mouse_clicked)
+{
+  stroke(255);
+   line(mouseX, mouseY, mouseX, mouseY+Mouse_line);
+   
+  if(mouseY>window_h)
+  {
+    Mouse_line = 0;
+  }
+   else if(mouseY+Mouse_line >=window_h)
+   {
+     Mouse_line = window_h - mouseY;
+   }
+   else
+   {
+     Mouse_line++;
+   }
+}
+  //==================================================Draw Drop Line - End
+  
+  //==================================================Dispaly ID - Start
+  //to be draw last so it sittes on top
   fill(23,54,203);
-  text("X00022027", 10, window_h - 10); //my number
+  text("X00022027 (fps:"+fps+") "/*+frameDrawen*/, /*window_w -*/ 10, window_h - 10); //my number
+  
+  //==================================================Dispaly ID - End
 }
 
 void mousePressed()
 {
-   fill(23,54,203);
-  line(mouseX-30, mouseY, mouseX+30, mouseY);
-  drops aClick = new drops(mouseX,mouseY);
- 
- // drops_of_mouse[]
+  Mouse_clicked = true;
+}
+void mouseReleased()
+{
+  Mouse_clicked = false;
+  Mouse_line = 0;
 }
 
-class drops
+//==================================================Custom Classes - Start
+
+class drop
 {
-   drops(int mousX, int mousY)
-  {
-    line(mousX, mousY, 10, 10);
-  }
+  int head_y;
+  int head_x;
+  int base_y;
+  int base_x;
   
-   drops(float mousX, float mousY)
+  drop()// Contructor
   {
-    line(mouseX-30, mouseY, mouseX+30, mouseY);
+    
   }
- 
+  void dispaly()
+  {
+    //draw the line
+  }
+  void add()
+  {
+    // add one val
+  }
+  void add(int num)
+  {
+    // add the val to the line
+  }
+  void end()
+  {
+    //keep leant
+  }
 }
+
+
+//==================================================Custom Classes - End
+
